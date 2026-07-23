@@ -1,6 +1,7 @@
 import pandas as pd
 import streamlit as st
 from google import genai
+from google.genai import types
 
 # Page Configuration
 st.set_page_config(page_title="AI Data Analyst", page_icon="📊", layout="wide")
@@ -33,8 +34,11 @@ if uploaded_file:
         else:
             with st.spinner("Analyzing dataset with Gemini..."):
                 try:
-                    # Initialize client with user's clean API Key
-                    client = genai.Client(api_key=api_key.strip())
+                    # 1. Initialize client explicitly targeting the v1 API endpoint
+                    client = genai.Client(
+                        api_key=api_key.strip(),
+                        http_options=types.HttpOptions(api_version="v1")
+                    )
 
                     columns_list = list(df.columns)
                     summary_stats = df.describe(include='all').to_string()
@@ -50,9 +54,9 @@ if uploaded_file:
                     {summary_stats[:2000]}
                     """
 
-                    # Using 'gemini-1.5-flash' - guaranteed stable model for free keys
+                    # 2. Call gemini-2.5-flash
                     response = client.models.generate_content(
-                        model="gemini-1.5-flash",
+                        model="gemini-2.5-flash",
                         contents=prompt,
                     )
 
@@ -62,4 +66,3 @@ if uploaded_file:
 
                 except Exception as err:
                     st.error(f"❌ API Call Failed: {err}")
-                    st.info("Tip: Double-check that your Gemini API Key is copied correctly with no extra spaces.")
