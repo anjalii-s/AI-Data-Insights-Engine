@@ -54,9 +54,9 @@ if uploaded_file:
                     {summary_stats[:2000]}
                     """
 
-                    # 2. Call gemini-2.5-flash
+                    # 2. Call 
                     response = client.models.generate_content(
-                        model="gemini-2.5-pro",
+                        model="gemini-2.0-flash-lite"",
                         contents=prompt,
                     )
 
