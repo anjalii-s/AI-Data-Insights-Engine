@@ -25,7 +25,7 @@ if uploaded_file and api_key:
     st.dataframe(df.head(5))
 
     if st.button("🚀 Generate AI Executive Report"):
-        with st.spinner("Analyzing dataset with Gemini 3.6 Flash..."):
+        with st.spinner("Analyzing dataset with Gemini 2.5 Flash..."):
             # Initialize client with user's key
             client = genai.Client(api_key=api_key)
 
@@ -46,7 +46,7 @@ if uploaded_file and api_key:
 
             # Call Gemini API
             response = client.models.generate_content(
-                model="gemini-3.6-flash",
+                model="gemini-2.5-flash",
                 contents=prompt,
             )
 
