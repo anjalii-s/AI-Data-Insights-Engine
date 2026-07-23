@@ -56,7 +56,7 @@ if uploaded_file:
 
                     # 2. Call 
                     response = client.models.generate_content(
-                        model="gemini-2.0-flash-lite"",
+                        model="gemini-2.0-flash-lite",
                         contents=prompt,
                     )
 
