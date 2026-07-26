@@ -1,18 +1,18 @@
-# 📊 AI Data Analyst & Executive Insights Engine
+# 📊 AI Business Intelligence & Executive Reporting Engine
 
-An AI-powered Business Intelligence application that transforms raw CSV datasets into executive-level business reports using Large Language Models (LLMs).
+An AI-powered Business Intelligence application that transforms raw CSV datasets into executive-level reports using **Groq's Llama 3.3 70B** Large Language Model.
 
-Built with **Python**, **Streamlit**, **Google Gemini**, and **Groq Llama**, this project enables users to upload any business dataset and receive strategic insights suitable for business executives, managers, and decision-makers.
+Built with **Python, Streamlit, Pandas, and the Groq API**, this project enables users to upload any CSV dataset and receive strategic business insights within seconds.
 
 ---
 
 ## 🚀 Project Overview
 
-During my Master's in **Data Analytics & Artificial Intelligence**, I worked extensively with data preprocessing, machine learning, visualization, and business analytics.
+After completing my **Master's in Data Analytics & Artificial Intelligence**, I wanted to continue practicing and strengthening the skills I developed during my studies.
 
-To reinforce those skills after graduation and continue practicing real-world AI applications, I developed this project as a personal learning exercise.
+This project was created as part of my continuous learning journey. It combines data analysis, business intelligence, prompt engineering, and Large Language Models to generate executive-level reports from structured datasets.
 
-Instead of producing only charts and statistics, the application converts structured business data into meaningful executive insights using modern Large Language Models.
+Rather than simply displaying statistics, the application interprets data from a business perspective, helping decision-makers quickly understand trends, risks, opportunities, and recommended actions.
 
 ---
 
@@ -20,133 +20,107 @@ Instead of producing only charts and statistics, the application converts struct
 
 - Upload any CSV dataset
 - Automatic dataset profiling
-- Data quality assessment
+- Dataset preview
 - Missing value analysis
 - Duplicate record detection
 - Statistical summary generation
-- Executive business reporting
+- AI-powered executive reporting
 - Business trend identification
-- Risk analysis
-- Opportunity identification
+- Risk assessment
+- Opportunity analysis
 - KPI recommendations
 - Actionable business recommendations
-- Support for multiple AI providers
+- Download generated report as Markdown
 
 ---
 
-## 🤖 Supported AI Models
+## 📈 Executive Report Includes
 
-Users can choose either:
-
-- Google Gemini
-- Groq Llama 3.3 70B
-
-Simply enter your own API key and generate reports.
-
----
-
-## 📊 Generated Report Includes
-
-The AI automatically generates:
+The application automatically generates:
 
 - Executive Summary
+- Dataset Overview
 - Data Quality Assessment
-- Key Insights
+- Key Business Insights
 - Business Trends
-- Risks
-- Opportunities
+- Risk Analysis
+- Business Opportunities
 - Recommended KPIs
-- Actionable Recommendations
-- Executive Conclusion
-
-The reports are designed for managers, executives, consultants, and business stakeholders rather than technical users.
+- Executive Recommendations
+- Conclusion
 
 ---
 
-## 🛠 Tech Stack
+## 🛠 Technology Stack
 
 - Python
 - Streamlit
 - Pandas
-- Google Gemini API
 - Groq API
+- Llama 3.3 70B
 - Prompt Engineering
-- Large Language Models (LLMs)
+- Business Intelligence
 
 ---
 
-## 📁 Workflow
+## 📂 Application Workflow
 
 ```
-Upload CSV
-      │
-      ▼
-Dataset Profiling
-      │
-      ▼
-Statistical Summary
-      │
-      ▼
-Prompt Generation
-      │
-      ▼
-Gemini / Groq
-      │
-      ▼
-Executive Business Report
+Upload CSV Dataset
+        │
+        ▼
+Automatic Dataset Profiling
+        │
+        ▼
+Statistical Summary Generation
+        │
+        ▼
+Prompt Engineering
+        │
+        ▼
+Groq Llama 3.3 70B
+        │
+        ▼
+Executive Business Intelligence Report
+        │
+        ▼
+Download Report
 ```
 
 ---
 
-## Example Use Cases
+## 💼 Example Use Cases
 
-The application can be used for datasets related to:
+Suitable for datasets related to:
 
-- Sales
+- Sales Analytics
 - Finance
 - Healthcare
-- Customer Analytics
 - Banking
+- Customer Analytics
 - Marketing
-- HR Analytics
-- Manufacturing
+- Human Resources
 - Retail
+- Manufacturing
 - Education
 
 ---
 
-## Future Improvements
+## ▶️ Installation
 
-Planned enhancements include:
-
-- Interactive dashboards
-- Automatic chart generation
-- PDF report export
-- Excel report export
-- PowerPoint executive summaries
-- Advanced EDA visualizations
-- Machine Learning model recommendations
-- Natural language data querying
-- Multi-file analysis
-- Database connectivity
-
----
-
-## Installation
-
-Clone the repository
+Clone the repository:
 
 ```bash
-git clone https://github.com/yourusername/AI-Data-Analyst.git
+git clone https://github.com/yourusername/AI-Business-Intelligence-Engine.git
 ```
 
-Install dependencies
+Install dependencies:
 
 ```bash
 pip install -r requirements.txt
 ```
 
-Run the application
+Run the application:
 
 ```bash
 streamlit run app.py
@@ -154,41 +128,60 @@ streamlit run app.py
 
 ---
 
-## Requirements
+## 📦 Requirements
 
-- Python 3.11+
-- Streamlit
-- Pandas
-- Google GenAI SDK
-- Groq SDK
+```
+streamlit
+pandas
+groq
+```
 
 ---
 
-## Learning Outcome
+## 🎯 Learning Outcomes
 
-This project helped me strengthen my understanding of:
+This project helped reinforce my understanding of:
 
 - Data preprocessing
-- Exploratory Data Analysis
+- Exploratory Data Analysis (EDA)
 - Business Intelligence reporting
 - Prompt Engineering
 - API integration
-- Streamlit development
-- Large Language Models
+- Streamlit application development
+- Large Language Models (LLMs)
 - Executive-level data storytelling
 
 ---
 
-## Disclaimer
+## 🚀 Future Enhancements
 
-This project is intended for educational and portfolio purposes. AI-generated insights should be reviewed before making business decisions.
+Planned improvements include:
+
+- Interactive dashboards
+- Automatic data visualizations
+- PDF export
+- Excel export
+- AI-powered chart interpretation
+- Natural language querying
+- Predictive analytics
+- Anomaly detection
+- Multi-file analysis
+- Database connectivity
 
 ---
 
-## Author
+## ⚠ Disclaimer
+
+This application is intended for educational and portfolio purposes. AI-generated insights should be reviewed before making important business decisions.
+
+---
+
+## 👩‍💻 Author
 
 **Anjali Shibu**
 
 M.Sc. Data Analytics & Artificial Intelligence
 
-Always learning, building, and exploring practical applications of AI and data analytics.
+Passionate about Data Analytics, Artificial Intelligence, Machine Learning, and Business Intelligence.
+
+Always learning. Always building.
