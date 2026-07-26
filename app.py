@@ -1,242 +1,223 @@
 import pandas as pd
 import streamlit as st
-
 from groq import Groq
-from google import genai
-from google.genai import types
 
-# --------------------------------------------------------
-# Page Configuration
-# --------------------------------------------------------
+# -------------------------------------------------------
+# PAGE CONFIGURATION
+# -------------------------------------------------------
 
 st.set_page_config(
-    page_title="AI Data Analyst & Executive Insights Engine",
+    page_title="AI Business Intelligence & Executive Reporting Engine",
     page_icon="📊",
     layout="wide"
 )
 
-st.title("📊 AI Data Analyst & Executive Insights Engine")
+st.title("📊 AI Business Intelligence & Executive Reporting Engine")
 
-st.write(
-    """
-Upload any business dataset and generate executive-level insights using
-either **Google Gemini** or **Groq Llama**.
-"""
-)
+st.markdown("""
+Generate executive-level business insights from any CSV dataset using **Groq Llama 3.3 70B**.
 
-# --------------------------------------------------------
-# Sidebar
-# --------------------------------------------------------
+Simply:
+
+1. Enter your Groq API Key
+2. Upload a CSV
+3. Click **Generate Executive Report**
+""")
+
+# -------------------------------------------------------
+# SIDEBAR
+# -------------------------------------------------------
 
 with st.sidebar:
 
     st.header("⚙ Configuration")
 
-    provider = st.radio(
-        "Choose AI Provider",
-        ["Gemini", "Groq"]
-    )
-
     api_key = st.text_input(
-        f"Enter {provider} API Key",
+        "Groq API Key",
         type="password"
     )
 
-    if provider == "Gemini":
-        st.markdown(
-            "Get a Gemini API Key:\nhttps://aistudio.google.com/"
-        )
+    st.info(
+        "Get your free API key from:\n\nhttps://console.groq.com/"
+    )
 
-    else:
-        st.markdown(
-            "Get a Groq API Key:\nhttps://console.groq.com/"
-        )
+# -------------------------------------------------------
+# LOAD DATA
+# -------------------------------------------------------
 
-# --------------------------------------------------------
-# Upload Dataset
-# --------------------------------------------------------
+@st.cache_data
+def load_data(file):
+
+    try:
+        return pd.read_csv(file, encoding="latin1")
+
+    except:
+        return pd.read_csv(file)
+
 
 uploaded_file = st.file_uploader(
     "Upload CSV Dataset",
     type=["csv"]
 )
 
-if uploaded_file is not None:
+if uploaded_file:
 
-    try:
-
-        df = pd.read_csv(uploaded_file, encoding="latin1")
-
-    except:
-
-        df = pd.read_csv(uploaded_file)
+    df = load_data(uploaded_file)
 
     st.subheader("Dataset Preview")
 
-    st.dataframe(df.head())
+    st.dataframe(df.head(), use_container_width=True)
 
-    col1, col2, col3 = st.columns(3)
+    c1, c2, c3 = st.columns(3)
 
-    col1.metric("Rows", df.shape[0])
-    col2.metric("Columns", df.shape[1])
-    col3.metric("Missing Values", int(df.isnull().sum().sum()))
+    c1.metric("Rows", df.shape[0])
+    c2.metric("Columns", df.shape[1])
+    c3.metric("Missing Values", int(df.isnull().sum().sum()))
 
     st.divider()
+
+    # -----------------------------
+    # DATA SUMMARY
+    # -----------------------------
+
+    dataset_summary = f"""
+
+Dataset Shape
+--------------
+Rows: {df.shape[0]}
+Columns: {df.shape[1]}
+
+Column Names
+------------
+{list(df.columns)}
+
+Data Types
+----------
+{df.dtypes.astype(str).to_string()}
+
+Missing Values
+--------------
+{df.isnull().sum().to_string()}
+
+Duplicate Rows
+--------------
+{df.duplicated().sum()}
+
+Statistical Summary
+-------------------
+{df.describe(include='all').fillna('').to_string()[:7000]}
+
+"""
 
     if st.button("🚀 Generate Executive Report"):
 
         if api_key.strip() == "":
-
-            st.warning("Please enter your API key.")
-
+            st.warning("Please enter your Groq API Key.")
             st.stop()
 
-        with st.spinner("Analyzing dataset..."):
+        prompt = f"""
+You are a Senior Data Scientist, Business Intelligence Consultant,
+and Strategy Advisor.
 
-            try:
+Below is a dataset profile.
 
-                # --------------------------------------
-                # Prepare dataset summary
-                # --------------------------------------
+{dataset_summary}
 
-                dataset_info = f"""
+Generate a professional executive report.
 
-Dataset Shape:
-Rows = {df.shape[0]}
-Columns = {df.shape[1]}
-
-Column Names:
-{list(df.columns)}
-
-Data Types:
-{df.dtypes.astype(str).to_string()}
-
-Missing Values:
-{df.isnull().sum().to_string()}
-
-Duplicate Rows:
-{df.duplicated().sum()}
-
-Statistical Summary:
-
-{df.describe(include="all").fillna("").to_string()[:5000]}
-
-"""
-
-                prompt = f"""
-You are a Senior Data Scientist and Business Intelligence Consultant.
-
-Analyze the following dataset summary.
-
-{dataset_info}
-
-Generate a detailed executive report.
-
-The report must contain:
+The report should contain:
 
 # Executive Summary
-
 Explain what this dataset likely represents.
+
+# Dataset Overview
+Summarize dataset characteristics.
 
 # Data Quality Assessment
 
 Discuss:
 - Missing values
 - Duplicate rows
-- Potential issues
 - Data completeness
+- Data reliability
+- Potential preprocessing required
 
 # Key Insights
 
-Provide at least FIVE important findings.
+Provide at least FIVE meaningful insights.
 
 # Business Trends
 
-Explain observable trends.
+Explain important patterns.
 
 # Risks
 
-Mention possible risks.
+Identify operational or business risks.
 
 # Opportunities
 
-Mention business opportunities.
+Identify areas where value can be created.
 
 # Recommended KPIs
 
-Suggest KPIs executives should monitor.
+Suggest measurable KPIs.
 
-# Actionable Recommendations
+# Executive Recommendations
 
-Provide at least FIVE recommendations.
+Provide at least FIVE actionable recommendations.
 
 # Conclusion
 
-Summarize the business value.
+Summarize the overall business value.
 
-Use professional language suitable for CEOs and business executives.
+Use professional language suitable for CEOs, senior managers,
+and business stakeholders.
+
+Avoid simply repeating statistics.
+
+Instead, interpret the data from a business perspective.
 """
 
-                # =====================================================
-                # GROQ
-                # =====================================================
+        try:
 
-                if provider == "Groq":
+            with st.spinner("Analyzing dataset using Groq AI..."):
 
-                    client = Groq(api_key=api_key)
+                client = Groq(api_key=api_key)
 
-                    response = client.chat.completions.create(
+                response = client.chat.completions.create(
 
-                        model="llama-3.3-70b-versatile",
+                    model="llama-3.3-70b-versatile",
 
-                        messages=[
-                            {
-                                "role": "system",
-                                "content": "You are an expert Data Scientist."
-                            },
-                            {
-                                "role": "user",
-                                "content": prompt
-                            }
-                        ],
+                    messages=[
+                        {
+                            "role": "system",
+                            "content": "You are an expert Business Intelligence Consultant."
+                        },
+                        {
+                            "role": "user",
+                            "content": prompt
+                        }
+                    ],
 
-                        temperature=0.3,
+                    temperature=0.3,
+                    max_tokens=2000
+                )
 
-                        max_tokens=1800,
-                    )
+                report = response.choices[0].message.content
 
-                    report = response.choices[0].message.content
+            st.success("Executive Report Generated Successfully!")
 
-                # =====================================================
-                # GEMINI
-                # =====================================================
+            st.markdown("---")
 
-                else:
+            st.markdown(report)
 
-                    client = genai.Client(
-                        api_key=api_key,
-                        http_options=types.HttpOptions(
-                            api_version="v1"
-                        )
-                    )
+            st.download_button(
+                "📥 Download Report",
+                data=report,
+                file_name="Executive_Report.md",
+                mime="text/markdown"
+            )
 
-                    response = client.models.generate_content(
+        except Exception as e:
 
-                        model="gemini-1.5-flash",
-
-                        contents=prompt,
-                    )
-
-                    report = response.text
-
-                st.success("Analysis Completed!")
-
-                st.markdown("---")
-
-                st.markdown("# 📈 Executive AI Report")
-
-                st.markdown(report)
-
-            except Exception as e:
-
-                st.error(f"API Error:\n\n{e}")
+            st.error(f"Error:\n\n{e}")
